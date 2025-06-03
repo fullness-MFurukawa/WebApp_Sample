@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Mvc;
 /// <summary>
 /// リスト3-2
