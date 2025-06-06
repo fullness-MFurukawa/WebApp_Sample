@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 [Route("Razor")]
 public class RazorSyntaxSampleController : Controller
 {
-
     /// <summary>
     /// ViewModel SampleFormのListをRazor View Show.cshtmlに渡す
     /// </summary>
