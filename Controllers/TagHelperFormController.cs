@@ -22,6 +22,12 @@ public class TagHelperFormController : Controller
     [HttpPost("Result")]
     public IActionResult Result(SampleForm form)
     {
+        // バリデーションチェック
+        if (!ModelState.IsValid)
+        {
+            // バリデーションエラーの場合は入力画面に遷移する
+            return View("Enter", form);
+        }
         return View(form);
     }
 

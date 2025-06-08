@@ -11,12 +11,15 @@ public class SampleForm
     /// </summary>
     /// <value></value>
     [Display(Name = "氏名")]
+    [Required(ErrorMessage = "{0}は入力必須です。")]
     public string? Name { get; set; }
     /// <summary>
     /// 年齢プロパティ
     /// </summary>
     /// <value></value>
     [Display(Name = "年齢")]
+    [Required(ErrorMessage = "{0}は入力必須です。")]
+    [Range(0, 120 , ErrorMessage = "{0}は{1}～{2}までの数字で入力してください。")]
     public int Age { get; set; }
 
     /// <summary>
@@ -27,6 +30,7 @@ public class SampleForm
     /// 選択された結果を格納するプロパティ
     /// </summary>
     [Display(Name = "都道府県")]
+    [Range(1, 3, ErrorMessage = "{0}を選択してください。")]
     public int PrefecturesId { get; set; }
     /// <summary>
     /// プルダウン表示するリスト
