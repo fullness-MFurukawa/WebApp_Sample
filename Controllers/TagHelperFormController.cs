@@ -25,9 +25,15 @@ public class TagHelperFormController : Controller
         return View(form);
     }
 
+    /// <summary>
+    /// [戻る]ボタンクリックに対するアクション
+    /// </summary>
+    /// <param name="form">入力された値を保持するSampleForm</param>
+    /// <returns></returns>
     [HttpGet("Back")]
     public IActionResult Back(SampleForm form)
     {
-        return View("Enter",form);
+        // 入力画面を出力する
+        return View("Enter", form);
     }
 }
