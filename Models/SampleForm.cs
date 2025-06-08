@@ -19,9 +19,10 @@ public class SampleForm
     [Display(Name = "年齢")]
     public int Age { get; set; }
 
-   
-   
-   
+    /// <summary>
+    /// リスト4-4 HTML Formを作成するタグヘルパー
+    /// </summary>
+
     /// <summary>
     /// 選択された結果を格納するプロパティ
     /// </summary>

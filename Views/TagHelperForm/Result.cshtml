@@ -9,7 +9,7 @@
     ?? "未選択";        
 }
 <h2>@ViewData["Title"]</h2>
-
+@* 入力された値を出力 *@
 <div class="d-flex justify-content-center mt-5">
     <table class="table table-bordered w-auto">
         <thead class="table-light">
@@ -34,6 +34,7 @@
         </tbody>
     </table>
 </div>
+@* [戻る]ボタン *@
 <div class="d-flex justify-content-center">
     <form method="get">
         <button type="button" onclick="location.href='/FormSample/Back'">戻る</button>
