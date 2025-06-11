@@ -26,7 +26,9 @@ public class TagHelperFormController : Controller
         if (!ModelState.IsValid)
         {
             // バリデーションエラーの場合は入力画面に遷移する
-            return View("Enter", form);
+            //return View("Enter", form);
+            // 入力画面にリダイレクトする
+            return RedirectToAction("Enter");
         }
         return View(form);
     }
