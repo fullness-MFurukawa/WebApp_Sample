@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 /// <summary>
 /// タグヘルパーを利用するコントローラ
 /// </summary>
@@ -8,8 +9,19 @@ public class TagHelperFormController : Controller
     [HttpGet("Enter")]
     public IActionResult Enter()
     {
-        // SampleFormを生成する
-        var form = new SampleForm();
+        // TempDataからSampleFormを取り出す
+        string json = (string) TempData["SampleForm"]!;
+        SampleForm? form = null;
+        if (json == null)
+        {
+            // TempDataにSampleFormが存在しない場合は生成する
+            form = new SampleForm();
+        }
+        else
+        {
+            // 存在する場合は、SampleFormをデシリアライズする
+            form = JsonSerializer.Deserialize<SampleForm>(json);
+        }
         // Enter.cshtmlにSampleFormを渡す
         return View(form);
     }
@@ -25,8 +37,10 @@ public class TagHelperFormController : Controller
         // バリデーションチェック
         if (!ModelState.IsValid)
         {
-            // バリデーションエラーの場合は入力画面に遷移する
-            //return View("Enter", form);
+            // SampleFormをシリアライズする
+            var json = JsonSerializer.Serialize(form);
+            // TempDataにjsonを追加する
+            TempData["SampleForm"] = json;
             // 入力画面にリダイレクトする
             return RedirectToAction("Enter");
         }
@@ -36,12 +50,11 @@ public class TagHelperFormController : Controller
     /// <summary>
     /// [戻る]ボタンクリックに対するアクション
     /// </summary>
-    /// <param name="form">入力された値を保持するSampleForm</param>
     /// <returns></returns>
     [HttpGet("Back")]
-    public IActionResult Back(SampleForm form)
+    public IActionResult Back()
     {
-        // 入力画面を出力する
-        return View("Enter", form);
+        // 入力画面を出力するアクションメソッドにリダイレクトする
+        return RedirectToAction("Enter");
     }
 }
