@@ -9,19 +9,7 @@ public class TagHelperFormController : Controller
     [HttpGet("Enter")]
     public IActionResult Enter()
     {
-        // TempDataからSampleFormを取り出す
-        string json = (string) TempData["SampleForm"]!;
-        SampleForm? form = null;
-        if (json == null)
-        {
-            // TempDataにSampleFormが存在しない場合は生成する
-            form = new SampleForm();
-        }
-        else
-        {
-            // 存在する場合は、SampleFormをデシリアライズする
-            form = JsonSerializer.Deserialize<SampleForm>(json);
-        }
+        var form = new SampleForm();
         // Enter.cshtmlにSampleFormを渡す
         return View(form);
     }
@@ -31,19 +19,30 @@ public class TagHelperFormController : Controller
     /// </summary>
     /// <param name="form">入力された値を保持するSampleForm</param>
     /// <returns></returns>
-    [HttpPost("Result")]
-    public IActionResult Result(SampleForm form)
+    [HttpPost("Calc")]
+    public IActionResult Calc(SampleForm form)
     {
         // バリデーションチェック
         if (!ModelState.IsValid)
         {
-            // SampleFormをシリアライズする
-            var json = JsonSerializer.Serialize(form);
-            // TempDataにjsonを追加する
-            TempData["SampleForm"] = json;
-            // 入力画面にリダイレクトする
-            return RedirectToAction("Enter");
+            // バリデーションエラーの場合は入力画面を表示する
+            return View("Enter", form);
         }
+        // SampleFormをシリアライズする
+        var json = JsonSerializer.Serialize(form);
+        // TempDataにjsonを追加する
+        TempData["SampleForm"] = json;
+        // 入力画面にリダイレクトする
+        return RedirectToAction("Result");
+    }
+
+    public IActionResult Result()
+    {
+        // TempDataからSampleFormを取得する
+        string json = (string)TempData["SampleForm"]!;
+        // SampleFormをデシリアライズする
+        var form = JsonSerializer.Deserialize<SampleForm>(json);
+        // 結果画面を表示する
         return View(form);
     }
 
