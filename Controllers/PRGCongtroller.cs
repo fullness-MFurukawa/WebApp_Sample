@@ -16,14 +16,25 @@ public class PRGController : Controller
         var form = new PRGForm();
         return View(form);
     }
+
     /// <summary>
     /// [送信]ボタンクリック
+    /// Submit()メソッドに変更
     /// </summary>
     /// <param name="form">PRGForm</param>
     /// <returns></returns>
     [HttpPost("Submit")]
     public IActionResult Submit(PRGForm form)
     {
+        // LoggerFactory を使って Logger を作成
+        using var loggerFactory = LoggerFactory.Create(builder =>
+        {
+            builder.AddConsole(); // コンソール出力
+        });
+        ILogger logger = loggerFactory.CreateLogger("PRGController");
+        // ログメッセージを表示する
+        logger.LogInformation("[送信]ボタンクリック!!!");
+
         //　バリデーションチェック
         if (!ModelState.IsValid)
         {
@@ -33,6 +44,7 @@ public class PRGController : Controller
         TempData["PRGForm"] = JsonSerializer.Serialize(form);
         return RedirectToAction("Result");
     }
+
     /// <summary>
     /// 入力結果画面を表示する
     /// </summary>
@@ -41,10 +53,10 @@ public class PRGController : Controller
     public IActionResult Result()
     {
         var json = (string)TempData["PRGForm"]!;
-        if (json == null)
+        if (string.IsNullOrEmpty(json))
         {
             // TempDataにPRGFormが存在しない場合、入力画面にリダイレクトする
-            RedirectToAction("Enter");
+            return RedirectToAction("Enter");
         }
         var form = JsonSerializer.Deserialize<PRGForm>(json!);
         // 入力された文字列の長さを取得する
@@ -52,6 +64,7 @@ public class PRGController : Controller
         // 結果画面を表示する
         return View(form);
     }
+
     /// <summary>
     /// [戻る]ボタンクリックに対するアクション
     /// </summary>
