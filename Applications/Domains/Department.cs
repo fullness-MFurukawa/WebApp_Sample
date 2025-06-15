@@ -1,3 +1,5 @@
+using Org.BouncyCastle.Crypto.Engines;
+
 namespace WebApp_Sample.Applications.Domains;
 /// <summary>
 /// 所属部署を表すドメインオブジェクト
@@ -24,12 +26,22 @@ public class Department
     /// </summary>
     /// <param name="name">部署名</param>
     public Department(string? name): this(null , name) {}
+    /// <summary>
+    /// コンストラクタ
+    /// </summary>
+    /// <param name="id">部署Id</param>
+    /// <returns></returns>
+    public Department(int? id)
+    {
+        this.Id = id;    
+    }
 
     /// <summary>
     /// 部署名のルール検証
     /// </summary>
     /// <param name="name"></param>
-    private void validateDepartmentName(string? name){
+    private void validateDepartmentName(string? name)
+    {
         if (name is not null)
         {
             if (string.IsNullOrWhiteSpace(name))
