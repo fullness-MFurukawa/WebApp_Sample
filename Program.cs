@@ -1,7 +1,17 @@
+using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using WebApp_Sample.Infrastructures.Context;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// 接続文字列（appsettings.json）から取得
+var connectionString = builder.Configuration.GetConnectionString("MySqlConnection");
+// DbContext登録（Pomelo用）
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 var app = builder.Build();
 
