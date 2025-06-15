@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 /// 従業員テーブル(employee)を扱うEntity Framework Coreのエンティティクラス
 /// </summary>
 [Table("employee")]
-public class EmmployeeEntity{
+public class EmployeeEntity{
     [Key] 
     [Column("emp_id")]
     public int EmpId { get; set; }
