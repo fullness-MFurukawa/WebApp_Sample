@@ -1,17 +1,25 @@
-using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
-using WebApp_Sample.Infrastructures.Context;
+using WebApp_Sample.Configs;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// 🔽 セッションの前提：分散キャッシュの設定
+builder.Services.AddDistributedMemoryCache();
+
+// 🔽 セッションの設定（Cookie＋Timeoutなど）
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(20);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// 接続文字列（appsettings.json）から取得
-var connectionString = builder.Configuration.GetConnectionString("MySqlConnection");
-// DbContext登録（Pomelo用）
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+// 依存定義および依存性注入ユーティリティクラス 
+// アプリケーションの依存関係を構築
+DependencyInjectionConfig.SettingDependencyInjection(builder.Configuration, builder.Services);
 
 var app = builder.Build();
 
@@ -23,13 +31,18 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+// セッションサービスを追加する
+//builder.Services.AddSession();
+
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 
-app.UseAuthorization();
+// セッションをミドルウェアとして有効化
+app.UseSession();
 
+app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

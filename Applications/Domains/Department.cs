@@ -1,13 +1,13 @@
-using Org.BouncyCastle.Crypto.Engines;
-
 namespace WebApp_Sample.Applications.Domains;
 /// <summary>
 /// 所属部署を表すドメインオブジェクト
 /// </summary>
 public class Department
 {
-    public int? Id { get; private set;}      // 部署Id
-    public string? Name { get; private set;} = string.Empty;    // 部署名
+    // 🔽 デシリアライズ用のパラメータなしコンストラクタを追加
+    public Department() { }
+    public int? Id { get; private set; }      // 部署Id
+    public string? Name { get; private set; } = string.Empty;    // 部署名
     private const int MaxLength = 20; // 部署名の長さ
     /// <summary>
     /// コンストラクタ
@@ -25,7 +25,7 @@ public class Department
     /// コンストラクタ
     /// </summary>
     /// <param name="name">部署名</param>
-    public Department(string? name): this(null , name) {}
+    public Department(string? name) : this(null, name) { }
     /// <summary>
     /// コンストラクタ
     /// </summary>
@@ -33,7 +33,7 @@ public class Department
     /// <returns></returns>
     public Department(int? id)
     {
-        this.Id = id;    
+        this.Id = id;
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ public class Department
             if (name.Length > MaxLength)
                 throw new ArgumentException($"部署名は{MaxLength}文字以内で入力してください", nameof(name));
         }
-    }    
+    }
 
     /// <summary>
     /// 部署名の変更

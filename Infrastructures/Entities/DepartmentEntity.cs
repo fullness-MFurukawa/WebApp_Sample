@@ -8,8 +8,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 public class DepartmentEntity 
 {
     [Key] 
-    [Column("emp_id")]
+    [Column("dept_id")]
     public int DeptId { get; set; }
-    [Column("emp_name")]
+    [Column("dept_name")]
     public string DeptName { get; set; } = string.Empty; 
 }

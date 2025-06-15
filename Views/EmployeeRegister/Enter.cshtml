@@ -1,0 +1,18 @@
+@model EmployeeRegisterForm;
+@{
+    ViewData["Title"] = "従業員登録(入力)";
+}
+<h2>@ViewData["Title"]</h2>
+<form asp-action="Confirm" asp-controller="EmployeeRegister" method="post">
+    <div class="mb-3"></div>
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="DeptId" class="form-label"></label>
+        <select asp-for="DeptId" asp-items="Model.Departments"
+            class="form-control"></select> 
+    </div>
+    <button type="submit" class="btn btn-primary">完了</button>
+</form>
