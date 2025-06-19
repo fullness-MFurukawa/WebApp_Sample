@@ -1,8 +1,8 @@
-using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using WebApp_Sample.Applications.Domains;
 using WebApp_Sample.Applications.Services;
 using WebApp_Sample.Models;
+using WebApp_Sample.Utils;
 namespace WebApp_Sample.Controllers;
 /// <summary>
 /// 従業員登録コントローラ
@@ -23,19 +23,27 @@ public class EmployeeRegisterController : Controller
     /// </summary>
     private readonly IFromViewModel<Employee, EmployeeRegisterForm> _employeeViewModelAdapter;
     /// <summary>
+    /// TempDataを通じて一時的にデータ(フォームなど)を保存・復元するためのインターフェイス
+    /// </summary>
+    private readonly  ITempDataStore<EmployeeRegisterForm> _empDataStore;
+
+    /// <summary>
     /// コンストラクタ
     /// </summary>
     /// <param name="logger"></param>
     /// <param name="employeeRegisterService"></param>
     /// <param name="employeeViewModelAdapter"></param>
+    /// <param name="empDataStore"></param>
     public EmployeeRegisterController(
         ILogger<EmployeeRegisterController> logger,
         IEmployeeRegisterService employeeRegisterService,
-        IFromViewModel<Employee, EmployeeRegisterForm> employeeViewModelAdapter)
+        IFromViewModel<Employee, EmployeeRegisterForm> employeeViewModelAdapter,
+        ITempDataStore<EmployeeRegisterForm> empDataStore)
     {
         _logger = logger;
         _employeeRegisterService = employeeRegisterService;
         _employeeViewModelAdapter = employeeViewModelAdapter;
+        _empDataStore = empDataStore;
     }
 
     /// <summary>
@@ -47,23 +55,14 @@ public class EmployeeRegisterController : Controller
     {
         EmployeeRegisterForm? form = null;
         // TempDataからEmployeeRegisterFormを取得する
-        string json = (string)TempData["EmployeeRegisterForm"]!;
-        if (string.IsNullOrEmpty(json))
+        form = _empDataStore.Load(this);
+        if (form == null)
         {
             // 従業員登録ViewModelを生成する
             form = new EmployeeRegisterForm();
         }
-        else
-        {
-            // EmployeeRegisterFormをデシリアライズする
-            form = JsonSerializer.Deserialize<EmployeeRegisterForm>(json);
-            _logger.LogInformation("リダイレクト:{0}", form!.ToString());
-        }
-        // 従業員登録サービスに部署リスト取得を依頼する
-        var departments = _employeeRegisterService.GetDepartments();
-        _logger.LogInformation("部署リスト取得");
-        // 従業員登録ViewModelのプロパティに設定する
-        form.SetDepartments(departments);
+        // 部署一覧を取得してViewModelに設定する(SelectListItem形式)
+        PopulateDepartments(form);
         // formをviewに渡して画面表示する
         return View(form);
     }
@@ -79,6 +78,8 @@ public class EmployeeRegisterController : Controller
         // バリデーションチェック
         if (!ModelState.IsValid) // バリデーションエラーあり
         {
+            // 部署一覧を取得してViewModelに設定する(SelectListItem形式)
+            PopulateDepartments(form);
             // 入力画面の表示
             return View("Enter", form);
         }
@@ -99,13 +100,12 @@ public class EmployeeRegisterController : Controller
     [HttpPost("Regiter")]
     public IActionResult Register(EmployeeRegisterForm form)
     {
-        // EmployeeRegisterFormをシリアライズする
-        var json = JsonSerializer.Serialize(form);
-        // TempDataにjsonを追加する
-        TempData["EmployeeRegisterForm"] = json;
+        // EmployeeRegisterFormをシリアライズして、TempDataに保存する
+        _empDataStore.Save(this, form);
         // 登録処理GETアクションメソッドにリダイレクトする
         return RedirectToAction("Complete");
     }
+
     /// <summary>
     /// アクションメソッド:Regiter()のリダイレクト先
     /// PRGパターン
@@ -116,15 +116,12 @@ public class EmployeeRegisterController : Controller
     {
         EmployeeRegisterForm? form = null;
         // TempDataからEmployeeRegisterFormを取得する
-        string json = (string)TempData["EmployeeRegisterForm"]!;
-        if (string.IsNullOrEmpty(json))
+        form = _empDataStore.Load(this);
+        if (form == null)
         {
             // データが存在しない場合、入力画面にリダイレクト
             return RedirectToAction("Enter");
         }
-        // EmployeeRegisterFormをデシリアライズする
-        form = JsonSerializer.Deserialize<EmployeeRegisterForm>(json);
-        // EmployeeRegisterFormをドメインモデル:Employeeに変換する
         var employee = _employeeViewModelAdapter.ToDomain(form!);
         // 新しい従業員を登録する
         _employeeRegisterService.Register(employee);
@@ -139,11 +136,19 @@ public class EmployeeRegisterController : Controller
     public IActionResult Back(EmployeeRegisterForm form)
     {
         _logger.LogInformation("[戻る]ボタンクリック:{0}", form!.ToString());
-        // EmployeeRegisterFormをシリアライズする
-        var json = JsonSerializer.Serialize(form);
-        // TempDataにjsonを追加する
-        TempData["EmployeeRegisterForm"] = json;
+        // EmployeeRegisterFormをシリアライズして、TempDataに保存する
+        _empDataStore.Save(this, form);
         // 入力画面を出力するアクションメソッドにリダイレクトする
         return RedirectToAction("Enter");
+    }
+
+    /// <summary>
+    /// 部署一覧を取得してViewModelに設定する(SelectListItem形式)
+    /// </summary>
+    private void PopulateDepartments(EmployeeRegisterForm form)
+    {
+        var departments = _employeeRegisterService.GetDepartments();
+        form.SetDepartments(departments);
+        _logger.LogInformation("部署リストを設定");
     }
 }
