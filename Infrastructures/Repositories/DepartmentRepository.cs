@@ -1,7 +1,8 @@
 using WebApp_Sample.Infrastructures.Context;
 using WebApp_Sample.Infrastructures.Entities;
-using WebApp_Sample.Applications.Domains.Departments;
-
+using WebApp_Sample.Applications.Domains;
+using WebApp_Sample.Applications.Repositories;
+using WebApp_Sample.Applications.Adapters;
 namespace WebApp_Sample.Infrastructures.Repositories;
 /// <summary>
 /// ドメインオブジェクト:部署のCRUD操作インターフェイス実装

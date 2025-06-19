@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using WebApp_Sample.Applications.In;
-using WebApp_Sample.Applications.In.ServiceImpls;
-using WebApp_Sample.Applications.Out;
+using WebApp_Sample.Applications.Repositories;
+using WebApp_Sample.Applications.Adapters;
 using WebApp_Sample.Infrastructures.Adapters;
 using WebApp_Sample.Infrastructures.Context;
 using WebApp_Sample.Infrastructures.Entities;
@@ -52,8 +51,8 @@ public static class DependencyInjectionConfig
     /// <param name="services">DIコンテナ</param>
     private static void SettingInfrastructures(IServiceCollection services)
     {
-        services.AddScoped<IDepartmentEntityAdapter<DepartmentEntity>, DepartmentEntityAdapter>();
-        services.AddScoped<IEmployeeEntityAdapter<EmployeeEntity>, EmployeeEntityAdapter>();
+        services.AddScoped<IDepartmentAdapter<DepartmentEntity>, DepartmentEntityAdapter>();
+        services.AddScoped<IEmployeeAdapter<EmployeeEntity>, EmployeeEntityAdapter>();
         services.AddScoped<IDepartmentRepository, DepartmentRepository>();
         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
     }

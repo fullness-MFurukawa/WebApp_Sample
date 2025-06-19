@@ -4,9 +4,7 @@ namespace WebApp_Sample.Applications.Domains;
 /// </summary>
 public class Department
 {
-    // 🔽 デシリアライズ用のパラメータなしコンストラクタを追加
-    public Department() { }
-    public int? Id { get; private set; }      // 部署Id
+     public int? Id { get; private set; }      // 部署Id
     public string? Name { get; private set; } = string.Empty;    // 部署名
     private const int MaxLength = 20; // 部署名の長さ
     /// <summary>

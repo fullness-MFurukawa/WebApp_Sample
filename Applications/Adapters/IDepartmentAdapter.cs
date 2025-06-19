@@ -1,21 +1,22 @@
-namespace WebApp_Sample.Applications.Domains.Departments;
+using WebApp_Sample.Applications.Domains;
+namespace WebApp_Sample.Applications.Adapters;
 /// <summary>
 /// ドメインモデル:部署と他のクラスの相互変換インターフェイス
 /// </summary>
-/// <typeparam name="T">相互変換クラス</typeparam>
-public interface IDepartmentAdapter<T>
+/// <typeparam name="TEntity">相互変換Entityクラス</typeparam>
+public interface IDepartmentAdapter<TEntity>
 {
     /// <summary>
     /// 他のクラスからドメインモデル:部署を復元する
     /// </summary>
-    /// <param name="otherModel">変換元クラス</param>
+    /// <param name="entity">変換元クラス</param>
     /// <returns>ドメインモデル:部署</returns>
-    Department Restore(T otherModel);
+    Department Restore(T entity);
 
     /// <summary>
     /// ドメインモデル:部署を他のクラスに変換する
     /// </summary>
     /// <param name="domain">ドメインモデル:部署</param>
     /// <returns>変換先クラス</returns>
-    T Convert(Department domain);
+    TEntity Convert(Department domain);
 }

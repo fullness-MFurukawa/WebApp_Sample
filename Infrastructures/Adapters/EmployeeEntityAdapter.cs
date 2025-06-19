@@ -1,12 +1,12 @@
-using WebApp_Sample.Applications.Domains.Employees;
+using WebApp_Sample.Applications.Domains;
+using WebApp_Sample.Applications.Adapters;
 using WebApp_Sample.Infrastructures.Entities;
-
 namespace WebApp_Sample.Infrastructures.Adapters;
 /// <summary>
 /// ドメインモデル:従業員と従業員エンティティの相互変換インターフェイスの実装
 /// </summary>
-/// <typeparam name="T">EmployeeEntity</typeparam>
-public class EmployeeEntityAdapter : IEmployeeEntityAdapter<EmployeeEntity>
+/// <typeparam name="TEntity">EmployeeEntity</typeparam>
+public class EmployeeEntityAdapter : IEmployeeAdapter<EmployeeEntity>
 {
     /// <summary>
     /// ドメインモデル:従業員をEmployeeEntityに変換する
@@ -30,9 +30,9 @@ public class EmployeeEntityAdapter : IEmployeeEntityAdapter<EmployeeEntity>
     /// <summary>
     /// EmployeeEntityからドメインモデル:従業員を復元する
     /// </summary>
-    /// <param name="otherModel">EmployeeEntity</param>
+    /// <param name="entity">EmployeeEntity</param>
     /// <returns>ドメインモデル:従業員</returns>
-    public Employee Restore(EmployeeEntity otherModel)
+    public Employee Restore(EmployeeEntity entity)
     {
         var employee = new Employee(
             entity.EmpId,

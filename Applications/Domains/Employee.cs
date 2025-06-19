@@ -1,10 +1,11 @@
 namespace WebApp_Sample.Applications.Domains;
+
 /// <summary>
 /// 従業員を表すドメインオブジェクト
 /// </summary>
-public class Employee 
+public class Employee
 {
-    public int? Id { get; private set; } // 社員Id
+     public int? Id { get; private set; } // 社員Id
     public string Name { get; private set; } = string.Empty; // 氏名
     public Department? Department { get; private set; } // 所属部署（null可）
 

@@ -1,12 +1,11 @@
-using WebApp_Sample.Applications.Domains.Departments;
+using WebApp_Sample.Applications.Domains;
+using WebApp_Sample.Applications.Adapters;
 using WebApp_Sample.Infrastructures.Entities;
-
 namespace WebApp_Sample.Infrastructures.Adapters;
-
 /// <summary>
 /// ドメインモデル:部署と部署エンティティの相互変換インターフェイスの実装
 /// </summary>
-/// <typeparam name="T">DepartmentEntity</typeparam>
+/// <typeparam name="TEntity">DepartmentEntity</typeparam>
 public class DepartmentEntityAdapter : IDepartmentAdapter<DepartmentEntity>
 {
     /// <summary>
@@ -30,11 +29,11 @@ public class DepartmentEntityAdapter : IDepartmentAdapter<DepartmentEntity>
     /// <summary>
     /// 他のクラスからドメインモデル:部署を復元する
     /// </summary>
-    /// <param name="otherModel">DepartmentEntity</param>
+    /// <param name="entity">DepartmentEntity</param>
     /// <returns>ドメインモデル:部署</returns>
-    public Department Restore(DepartmentEntity otherModel)
+    public Department Restore(DepartmentEntity entity)
     {
-        var department = new Department(otherModel.DeptId,otherModel.DeptName!);
+        var department = new Department(entity.DeptId,entity.DeptName!);
         return department;
     }
 }
