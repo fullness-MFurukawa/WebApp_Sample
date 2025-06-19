@@ -1,6 +1,8 @@
 using WebApp_Sample.Applications.Domains;
-using WebApp_Sample.Models;
 namespace WebApp_Sample.Models.Adapters.Impls;
+/// <summary>
+/// 従業員登録ViewModelをドメインオブジェクト:従業員に変換するアダプターインターフェイスの実装
+/// </summary>
 public class EmployeeRegisterViewModelAdapter : IFromViewModel<Employee, EmployeeRegisterForm>
 {
     /// <summary>

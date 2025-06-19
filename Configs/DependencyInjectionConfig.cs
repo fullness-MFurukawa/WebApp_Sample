@@ -55,29 +55,36 @@ public static class DependencyInjectionConfig
     /// <param name="services">DIコンテナ</param>
     private static void SettingInfrastructures(IServiceCollection services)
     {
+        // ドメインモデル:部署と部署エンティティの相互変換インターフェイスの実装
         services.AddScoped<IDepartmentAdapter<DepartmentEntity>, DepartmentEntityAdapter>();
+        // ドメインモデル:従業員と従業員エンティティの相互変換インターフェイスの実装
         services.AddScoped<IEmployeeAdapter<EmployeeEntity>, EmployeeEntityAdapter>();
+        // ドメインオブジェクト:部署のCRUD操作インターフェイス実装
         services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+        // ドメインオブジェクト:従業員のCRUD操作インターフェイスの実装
         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
     }
 
     /// <summary>
     /// アプリケーション層のインスタンス生成と依存定義
     /// </summary>
-    /// <param name="services"></param>
+    /// <param name="services">DIコンテナ</param>
     private static void SettingApplications(IServiceCollection services)
     {
+        // 従業員登録サービスインターフェイスの実装
         services.AddScoped<IEmployeeRegisterService, EmployeeRegisterService>();
     }
-    
+
     /// <summary>
     /// プレゼンテーション層のインスタンス生成と依存定義
     /// </summary>
-    /// <param name="services"></param>
+    /// <param name="services">DIコンテナ</param>
     private static void SettingPresentations(IServiceCollection services)
     {
+        // 従業員登録ViewModelをドメインオブジェクト:従業員に変換するアダプターインターフェイスの実装
         services.AddScoped<IFromViewModel<Employee, EmployeeRegisterForm>
             , EmployeeRegisterViewModelAdapter>();
+        // TempDataへのEmployeeRegisterFormの保存・復元するためのインターフェイス実装
         services.AddScoped<ITempDataStore<EmployeeRegisterForm>
             , EmployeeRegisterFormStore>();
     }
