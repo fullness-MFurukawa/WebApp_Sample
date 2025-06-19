@@ -122,6 +122,7 @@ public class EmployeeRegisterController : Controller
             // データが存在しない場合、入力画面にリダイレクト
             return RedirectToAction("Enter");
         }
+        // EmployeeRegisterFormをドメインモデル:Employeeに変換する
         var employee = _employeeViewModelAdapter.ToDomain(form!);
         // 新しい従業員を登録する
         _employeeRegisterService.Register(employee);
@@ -147,7 +148,9 @@ public class EmployeeRegisterController : Controller
     /// </summary>
     private void PopulateDepartments(EmployeeRegisterForm form)
     {
+        // 従業員登録サービスから部署一覧を取得する
         var departments = _employeeRegisterService.GetDepartments();
+        // 部署一覧をEmployeeRegisterFormに登録する
         form.SetDepartments(departments);
         _logger.LogInformation("部署リストを設定");
     }
