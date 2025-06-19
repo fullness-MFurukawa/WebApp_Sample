@@ -1,5 +1,4 @@
 namespace WebApp_Sample.Applications.Domains.Departments;
-
 /// <summary>
 /// ドメインモデル:部署と他のクラスの相互変換インターフェイス
 /// </summary>
@@ -13,7 +12,7 @@ public interface IDepartmentAdapter<T>
     /// <returns>ドメインモデル:部署</returns>
     Department Restore(T otherModel);
 
-     /// <summary>
+    /// <summary>
     /// ドメインモデル:部署を他のクラスに変換する
     /// </summary>
     /// <param name="domain">ドメインモデル:部署</param>
