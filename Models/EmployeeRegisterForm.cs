@@ -24,6 +24,13 @@ public class EmployeeRegisterForm
     public int? DeptId { get; set; } = 0;
 
     /// <summary>
+    /// 選択された部署名
+    /// </summary>
+    /// <value></value>
+    [Display(Name = "部署名")]
+    public string? DeptName { get; set; } = string.Empty;
+
+    /// <summary>
     /// 部署のリストをSelectListItemのリストに変換してプロパティに設定する
     /// </summary>
     /// <param name="departments"></param>
@@ -45,4 +52,9 @@ public class EmployeeRegisterForm
     }
     // 部署のリスト
     public List<SelectListItem>? Departments { get; set; } = null;
+
+    public override string ToString()
+    {
+        return $"Name={Name} , DeptId={DeptId} , DeptName={DeptName} , Departments={Departments}";
+    }
 }

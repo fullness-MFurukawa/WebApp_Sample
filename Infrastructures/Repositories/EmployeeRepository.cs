@@ -16,7 +16,7 @@ public class EmployeeRepository : IEmployeeRepository
     /// <summary>
     /// ドメインモデル:従業員と従業員エンティティの相互変換インターフェイスの実装
     /// </summary>
-    private readonly IEmployeeEntityAdapter<EmployeeEntity> _adapter;
+    private readonly IEmployeeAdapter<EmployeeEntity> _adapter;
     /// <summary>
     /// コンストラクタ
     /// </summary>
@@ -24,7 +24,7 @@ public class EmployeeRepository : IEmployeeRepository
     /// <param name="adapter"></param>
     public EmployeeRepository(
         AppDbContext context,
-        IEmployeeEntityAdapter<EmployeeEntity> adapter)
+        IEmployeeAdapter<EmployeeEntity> adapter)
     {
         _context = context;
         _adapter = adapter;        
@@ -36,7 +36,7 @@ public class EmployeeRepository : IEmployeeRepository
     /// <param name="employee">永続化対象の従業員</param>
     public void Create(Employee employee)
     {
-        var entity = _adapter.ToEntity(employee);
+        var entity = _adapter.Convert(employee);
         _context.Employees.Add(entity);
         _context.SaveChanges();
     }

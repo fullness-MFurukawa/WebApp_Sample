@@ -1,3 +1,4 @@
+using WebApp_Sample.Applications.Domains;
 namespace WebApp_Sample.Applications.Services;
 /// <summary>
 /// 従業員登録サービスインターフェイス

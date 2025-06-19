@@ -1,7 +1,8 @@
 namespace WebApp_Sample.Applications.Services.Impls;
 using WebApp_Sample.Applications.Services;
-using WebApp_Sample.Applications.Domains.Departments;
-using WebApp_Sample.Applications.Domains.Employees;
+using WebApp_Sample.Applications.Repositories;
+using WebApp_Sample.Applications.Domains;
+using WebApp_Sample.Exceptions;
 /// <summary>
 /// 従業員登録サービスインターフェイスの実装
 /// </summary>
@@ -24,6 +25,8 @@ public class EmployeeRegisterService : IEmployeeRegisterService
     public EmployeeRegisterService(
         IEmployeeRepository employeeRepository,
         IDepartmentRepository departmentRepository){
+        _employeeRepository = employeeRepository;
+        _departmentRepository = departmentRepository;
     }
 
     /// <summary>

@@ -3,15 +3,15 @@ using WebApp_Sample.Configs;
 var builder = WebApplication.CreateBuilder(args);
 
 // 🔽 セッションの前提：分散キャッシュの設定
-builder.Services.AddDistributedMemoryCache();
+//builder.Services.AddDistributedMemoryCache();
 
 // 🔽 セッションの設定（Cookie＋Timeoutなど）
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromMinutes(20);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
+//builder.Services.AddSession(options =>
+//{
+//    options.IdleTimeout = TimeSpan.FromMinutes(20);
+//    options.Cookie.HttpOnly = true;
+//    options.Cookie.IsEssential = true;
+//});
 
 
 // Add services to the container.
@@ -40,7 +40,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 // セッションをミドルウェアとして有効化
-app.UseSession();
+//app.UseSession();
 
 app.UseAuthorization();
 app.MapControllerRoute(

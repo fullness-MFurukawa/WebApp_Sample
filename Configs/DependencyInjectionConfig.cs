@@ -1,4 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using WebApp_Sample.Applications.Domains;
+using WebApp_Sample.Applications.Services;
+using WebApp_Sample.Applications.Services.Impls;
 using WebApp_Sample.Applications.Repositories;
 using WebApp_Sample.Applications.Adapters;
 using WebApp_Sample.Infrastructures.Adapters;
@@ -7,6 +10,7 @@ using WebApp_Sample.Infrastructures.Entities;
 using WebApp_Sample.Infrastructures.Repositories;
 using WebApp_Sample.Models;
 using WebApp_Sample.Models.Adapters;
+using WebApp_Sample.Models.Adapters.Impls;
 
 namespace WebApp_Sample.Configs;
 /// <summary>
@@ -65,14 +69,13 @@ public static class DependencyInjectionConfig
     {
         services.AddScoped<IEmployeeRegisterService, EmployeeRegisterService>();
     }
-
     /// <summary>
     /// プレゼンテーション層のインスタンス生成と依存定義
     /// </summary>
     /// <param name="services"></param>
     private static void SettingPresentations(IServiceCollection services)
     {
-        services.AddScoped<IEmployeeViewModelAdapter<EmployeeRegisterForm>,
-            EmployeeRegisterViewModelAdapter>();
+        services.AddScoped<IFromViewModel<Employee, EmployeeRegisterForm>
+            ,EmployeeRegisterViewModelAdapter>();
     }
 }

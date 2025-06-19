@@ -4,11 +4,11 @@ namespace WebApp_Sample.Models.Adapters.Impls;
 public class EmployeeRegisterViewModelAdapter : IFromViewModel<Employee, EmployeeRegisterForm>
 {
     /// <summary>
-    /// ViewModelをドメインオブジェクトに変換する
+    /// ViewModelをドメインオブジェクト:従業員に変換する
     /// </summary>
-    /// <param name="viewModel">変換対象のViewModel</param>
-    /// <returns>変換されたドメインオブジェクト</returns>
-    Employee ToDomain(EmployeeRegisterForm viewModel)
+    /// <param name="viewModel">EmployeeRegisterForm</param>
+    /// <returns>ドメインオブジェクト:従業員</returns>
+    public Employee ToDomain(EmployeeRegisterForm viewModel)
     {
         var department = new Department(viewModel.DeptId!.Value);
         var employee = new Employee(viewModel.Name!, department);

@@ -11,7 +11,7 @@ public interface IDepartmentAdapter<TEntity>
     /// </summary>
     /// <param name="entity">変換元クラス</param>
     /// <returns>ドメインモデル:部署</returns>
-    Department Restore(T entity);
+    Department Restore(TEntity entity);
 
     /// <summary>
     /// ドメインモデル:部署を他のクラスに変換する
