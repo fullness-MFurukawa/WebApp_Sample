@@ -82,10 +82,10 @@ public static class DependencyInjectionConfig
     private static void SettingPresentations(IServiceCollection services)
     {
         // 従業員登録ViewModelをドメインオブジェクト:従業員に変換するアダプターインターフェイスの実装
-        services.AddScoped<IFromViewModel<Employee, EmployeeRegisterForm>
-            , EmployeeRegisterViewModelAdapter>();
+        services.AddScoped<IFromViewModel<Employee, EmployeeRegisterForm> ,
+            EmployeeRegisterViewModelAdapter>();
         // TempDataへのEmployeeRegisterFormの保存・復元するためのインターフェイス実装
-        services.AddScoped<ITempDataStore<EmployeeRegisterForm>
-            , EmployeeRegisterFormStore>();
+        services.AddScoped<ITempDataStore<EmployeeRegisterForm> ,
+            EmployeeRegisterFormStore>();
     }
 }
