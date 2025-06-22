@@ -1,6 +1,6 @@
 namespace WebApp_Sample.Applications.Adapters;
 /// <summary>
-/// ドメインオブジェクトから他のクラスへの変換を表すインターフェイス
+/// TDomainに指定されたドメインオブジェクトをTTargetに指定されたクラスに変換するインターフェイス
 /// </summary>
 /// <typeparam name="TDomain">ドメインオブジェクトの型</typeparam>
 /// <typeparam name="TTarget">変換クラスの型</typeparam>
