@@ -10,7 +10,8 @@ using WebApp_Sample.Infrastructures.Entities;
 using WebApp_Sample.Infrastructures.Repositories;
 using WebApp_Sample.Models;
 using WebApp_Sample.Models.Adapters.Impls;
-using WebApp_Sample.Utils;
+using WebApp_Sample.Models.Stores;
+using WebApp_Sample.Models.Stores.Impls;
 
 namespace WebApp_Sample.Configs;
 /// <summary>

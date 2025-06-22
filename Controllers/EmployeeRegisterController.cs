@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebApp_Sample.Applications.Domains;
 using WebApp_Sample.Applications.Services;
 using WebApp_Sample.Models;
-using WebApp_Sample.Utils;
+using WebApp_Sample.Models.Stores;
 namespace WebApp_Sample.Controllers;
 /// <summary>
 /// 従業員登録コントローラ

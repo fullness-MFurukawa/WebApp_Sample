@@ -1,7 +1,6 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
-using WebApp_Sample.Models;
-namespace WebApp_Sample.Utils;
+namespace WebApp_Sample.Models.Stores.Impls;
 /// <summary>
 /// TempDataへのEmployeeRegisterFormの保存・復元するためのインターフェイス実装
 /// </summary>
@@ -20,7 +19,6 @@ public class EmployeeRegisterFormStore : ITempDataStore<EmployeeRegisterForm>
     {
         _key = "EmployeeRegisterForm";
     }
-
     /// <summary>
     /// TempDataに保存されたJSONを復元して、指定した型のオブジェクトを返す
     /// </summary>
@@ -50,7 +48,6 @@ public class EmployeeRegisterFormStore : ITempDataStore<EmployeeRegisterForm>
             return null;
         }     
     }
-
     /// <summary>
     /// 指定されたコントローラのTempDataに、オブジェクトをJSONとして保存する
     /// </summary>

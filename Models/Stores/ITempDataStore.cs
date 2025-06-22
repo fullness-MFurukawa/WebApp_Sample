@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-namespace WebApp_Sample.Utils;
-
+namespace WebApp_Sample.Models.Stores;
 /// <summary>
 /// TempDataを通じて一時的にデータ(フォームなど)を保存・復元するためのインターフェイス
 /// </summary>
