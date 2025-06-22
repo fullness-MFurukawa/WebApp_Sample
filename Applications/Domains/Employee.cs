@@ -1,5 +1,4 @@
 namespace WebApp_Sample.Applications.Domains;
-
 /// <summary>
 /// 従業員を表すドメインオブジェクト
 /// </summary>

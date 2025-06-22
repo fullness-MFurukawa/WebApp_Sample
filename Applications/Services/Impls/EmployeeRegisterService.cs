@@ -1,8 +1,7 @@
-namespace WebApp_Sample.Applications.Services.Impls;
-using WebApp_Sample.Applications.Services;
 using WebApp_Sample.Applications.Repositories;
 using WebApp_Sample.Applications.Domains;
 using WebApp_Sample.Exceptions;
+namespace WebApp_Sample.Applications.Services.Impls;
 /// <summary>
 /// 従業員登録サービスインターフェイスの実装
 /// </summary>
@@ -24,7 +23,8 @@ public class EmployeeRegisterService : IEmployeeRegisterService
     /// <param name="departmentRepository"></param>
     public EmployeeRegisterService(
         IEmployeeRepository employeeRepository,
-        IDepartmentRepository departmentRepository){
+        IDepartmentRepository departmentRepository)
+    {
         _employeeRepository = employeeRepository;
         _departmentRepository = departmentRepository;
     }
@@ -52,7 +52,7 @@ public class EmployeeRegisterService : IEmployeeRegisterService
     {
         return _departmentRepository.FindAll();
     }
-    
+
     /// <summary>
     /// 新しい従業員を登録する
     /// </summary>

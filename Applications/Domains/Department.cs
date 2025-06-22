@@ -31,7 +31,7 @@ public class Department
     /// <returns></returns>
     public Department(int? id)
     {
-        this.Id = id;
+        Id = id;
     }
 
     /// <summary>
