@@ -1,21 +1,23 @@
-using WebApp_Sample.Applications.Domains;
 using WebApp_Sample.Applications.Adapters;
+using WebApp_Sample.Applications.Domains;
 using WebApp_Sample.Infrastructures.Entities;
 namespace WebApp_Sample.Infrastructures.Adapters;
 /// <summary>
-/// ドメインモデル:部署と部署エンティティの相互変換インターフェイスの実装
+/// ドメインオブジェクト:DepartmentとDepartmentEntityの相互変換インターフェイスの実装
 /// </summary>
-/// <typeparam name="TEntity">DepartmentEntity</typeparam>
-public class DepartmentEntityAdapter : IDepartmentAdapter<DepartmentEntity>
+/// <typeparam name="TDomain">Department</typeparam>
+/// <typeparam name="TTarget">DepartmentEntity</typeparam>
+public class DepartmentEntityAdapter :
+IConverter<Department, DepartmentEntity>, IRestorer<Department, DepartmentEntity>
 {
-    /// <summary>
-    /// ドメインモデル:部署を他のクラスに変換する
+    // <summary>
+    /// ドメインオブジェクト:DepartmentをDepartmentEntityに変換する
     /// </summary>
-    /// <param name="domain">ドメインモデル:部署</param>
+    /// <param name="domain">ドメインオブジェクト:Department</param>
     /// <returns>DepartmentEntity</returns>
     public DepartmentEntity Convert(Department domain)
     {
-        var entity = new DepartmentEntity{
+         var entity = new DepartmentEntity{
             DeptName = domain.Name!,
         };
         if (domain.Id != null)
@@ -26,14 +28,15 @@ public class DepartmentEntityAdapter : IDepartmentAdapter<DepartmentEntity>
         }
         return entity;
     }
+
     /// <summary>
-    /// 他のクラスからドメインモデル:部署を復元する
+    /// DepartmentEntityからドメインオブジェクト:Departmentを復元する
     /// </summary>
     /// <param name="entity">DepartmentEntity</param>
-    /// <returns>ドメインモデル:部署</returns>
-    public Department Restore(DepartmentEntity entity)
+    /// <returns>ドメインオブジェクト:Department</returns>
+    public Department Restore(DepartmentEntity target)
     {
-        var department = new Department(entity.DeptId,entity.DeptName!);
+        var department = new Department(target.DeptId,target.DeptName!);
         return department;
     }
 }

@@ -3,10 +3,8 @@ using WebApp_Sample.Applications.Domains;
 using WebApp_Sample.Applications.Services;
 using WebApp_Sample.Applications.Services.Impls;
 using WebApp_Sample.Applications.Repositories;
-using WebApp_Sample.Applications.Adapters;
 using WebApp_Sample.Infrastructures.Adapters;
 using WebApp_Sample.Infrastructures.Context;
-using WebApp_Sample.Infrastructures.Entities;
 using WebApp_Sample.Infrastructures.Repositories;
 using WebApp_Sample.Models;
 using WebApp_Sample.Models.Adapters.Impls;
@@ -57,9 +55,9 @@ public static class DependencyInjectionConfig
     private static void SettingInfrastructures(IServiceCollection services)
     {
         // ドメインモデル:部署と部署エンティティの相互変換インターフェイスの実装
-        services.AddScoped<IDepartmentAdapter<DepartmentEntity>, DepartmentEntityAdapter>();
+        services.AddScoped<DepartmentEntityAdapter>();
         // ドメインモデル:従業員と従業員エンティティの相互変換インターフェイスの実装
-        services.AddScoped<IEmployeeAdapter<EmployeeEntity>, EmployeeEntityAdapter>();
+        services.AddScoped<EmployeeEntityAdapter>();
         // ドメインオブジェクト:部署のCRUD操作インターフェイス実装
         services.AddScoped<IDepartmentRepository, DepartmentRepository>();
         // ドメインオブジェクト:従業員のCRUD操作インターフェイスの実装
