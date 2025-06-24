@@ -3,6 +3,7 @@ using WebApp_Sample.Infrastructures.Entities;
 using WebApp_Sample.Applications.Domains;
 using WebApp_Sample.Applications.Repositories;
 using WebApp_Sample.Applications.Adapters;
+using WebApp_Sample.Infrastructures.Adapters;
 namespace WebApp_Sample.Infrastructures.Repositories;
 /// <summary>
 /// ドメインオブジェクト:従業員のCRUD操作インターフェイスの実装
@@ -16,7 +17,7 @@ public class EmployeeRepository : IEmployeeRepository
     /// <summary>
     /// ドメインモデル:従業員と従業員エンティティの相互変換インターフェイスの実装
     /// </summary>
-    private readonly IEmployeeAdapter<EmployeeEntity> _adapter;
+    private readonly EmployeeEntityAdapter _adapter;
     /// <summary>
     /// コンストラクタ
     /// </summary>
@@ -24,7 +25,7 @@ public class EmployeeRepository : IEmployeeRepository
     /// <param name="adapter"></param>
     public EmployeeRepository(
         AppDbContext context,
-        IEmployeeAdapter<EmployeeEntity> adapter)
+        EmployeeEntityAdapter adapter)
     {
         _context = context;
         _adapter = adapter;        

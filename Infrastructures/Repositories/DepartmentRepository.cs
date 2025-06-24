@@ -1,8 +1,7 @@
 using WebApp_Sample.Infrastructures.Context;
-using WebApp_Sample.Infrastructures.Entities;
 using WebApp_Sample.Applications.Domains;
 using WebApp_Sample.Applications.Repositories;
-using WebApp_Sample.Applications.Adapters;
+using WebApp_Sample.Infrastructures.Adapters;
 namespace WebApp_Sample.Infrastructures.Repositories;
 /// <summary>
 /// ドメインオブジェクト:部署のCRUD操作インターフェイス実装
@@ -16,10 +15,10 @@ public class DepartmentRepository : IDepartmentRepository
     /// <summary>
     /// ドメインモデル:部署と部署エンティティの相互変換インターフェイスの実装
     /// </summary>
-    private readonly IDepartmentAdapter<DepartmentEntity> _adapter;
+    private readonly DepartmentEntityAdapter _adapter;
     public DepartmentRepository(
         AppDbContext context,
-        IDepartmentAdapter<DepartmentEntity> adapter)
+        DepartmentEntityAdapter adapter)
     {
             _context = context;
             _adapter = adapter;
