@@ -1,9 +1,8 @@
 using WebApp_Sample.Infrastructures.Context;
-using WebApp_Sample.Infrastructures.Entities;
 using WebApp_Sample.Applications.Domains;
 using WebApp_Sample.Applications.Repositories;
-using WebApp_Sample.Applications.Adapters;
 using WebApp_Sample.Infrastructures.Adapters;
+using WebApp_Sample.Exceptions;
 namespace WebApp_Sample.Infrastructures.Repositories;
 /// <summary>
 /// ドメインオブジェクト:従業員のCRUD操作インターフェイスの実装
@@ -18,17 +17,16 @@ public class EmployeeRepository : IEmployeeRepository
     /// ドメインモデル:従業員と従業員エンティティの相互変換インターフェイスの実装
     /// </summary>
     private readonly EmployeeEntityAdapter _adapter;
+    
     /// <summary>
     /// コンストラクタ
     /// </summary>
     /// <param name="context"></param>
     /// <param name="adapter"></param>
-    public EmployeeRepository(
-        AppDbContext context,
-        EmployeeEntityAdapter adapter)
+    public EmployeeRepository(AppDbContext context, EmployeeEntityAdapter adapter)
     {
         _context = context;
-        _adapter = adapter;        
+        _adapter = adapter;
     }
 
     /// <summary>
@@ -37,8 +35,16 @@ public class EmployeeRepository : IEmployeeRepository
     /// <param name="employee">永続化対象の従業員</param>
     public void Create(Employee employee)
     {
-        var entity = _adapter.Convert(employee);
-        _context.Employees.Add(entity);
-        _context.SaveChanges();
+        try
+        {
+            var entity = _adapter.Convert(employee);
+            _context.Employees.Add(entity);
+            _context.SaveChanges();
+        }
+        catch (Exception e)
+        {
+            throw new InternalException(
+                "従業員の永続化ができませんでした。", e);
+        }
     }
 }

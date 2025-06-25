@@ -1,3 +1,4 @@
+using WebApp_Sample.Exceptions;
 namespace WebApp_Sample.Applications.Domains;
 /// <summary>
 /// 所属部署を表すドメインオブジェクト
@@ -43,9 +44,9 @@ public class Department
         if (name is not null)
         {
             if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("部署名は必須です", nameof(name));
+                throw new DomainException("部署名は必須です");
             if (name.Length > MaxLength)
-                throw new ArgumentException($"部署名は{MaxLength}文字以内で入力してください", nameof(name));
+                throw new DomainException($"部署名は{MaxLength}文字以内で入力してください");
         }
     }
 

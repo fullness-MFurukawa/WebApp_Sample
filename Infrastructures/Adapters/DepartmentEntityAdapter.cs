@@ -8,7 +8,7 @@ namespace WebApp_Sample.Infrastructures.Adapters;
 /// <typeparam name="TDomain">Department</typeparam>
 /// <typeparam name="TTarget">DepartmentEntity</typeparam>
 public class DepartmentEntityAdapter :
-IConverter<Department, DepartmentEntity>, IRestorer<Department, DepartmentEntity>
+IConverter<Department, DepartmentEntity>,IRestorer<Department, DepartmentEntity>
 {
     // <summary>
     /// ドメインオブジェクト:DepartmentをDepartmentEntityに変換する

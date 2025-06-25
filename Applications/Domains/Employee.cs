@@ -1,3 +1,4 @@
+using WebApp_Sample.Exceptions;
 namespace WebApp_Sample.Applications.Domains;
 /// <summary>
 /// 従業員を表すドメインオブジェクト
@@ -38,9 +39,9 @@ public class Employee
     private void ValidateName(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("氏名は必須です", nameof(name));
+            throw new DomainException("氏名は必須です");
         if (name.Length > MaxLength)
-            throw new ArgumentException($"氏名は{MaxLength}文字以内で入力してください", nameof(name));
+            throw new DomainException($"氏名は{MaxLength}文字以内で入力してください");
     }
 
     /// <summary>
