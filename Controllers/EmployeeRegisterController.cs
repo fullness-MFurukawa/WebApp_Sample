@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using WebApp_Sample.Applications.Domains;
 using WebApp_Sample.Applications.Services;
 using WebApp_Sample.Models;
+using WebApp_Sample.Models.Adapters;
 using WebApp_Sample.Models.Stores;
 namespace WebApp_Sample.Controllers;
 /// <summary>
@@ -21,28 +21,28 @@ public class EmployeeRegisterController : Controller
     /// <summary>
     /// 従業員登録ViewModelをドメインオブジェクト:従業員に変換するアダプターインターフェイス
     /// </summary>
-    private readonly IFromViewModel<Employee, EmployeeRegisterForm> _employeeViewModelAdapter;
+    private readonly EmployeeRegisterFormAdapter _employeeRegisterFormAdapter;
     /// <summary>
     /// TempDataを通じて一時的にデータ(フォームなど)を保存・復元するためのインターフェイス
     /// </summary>
-    private readonly  ITempDataStore<EmployeeRegisterForm> _empDataStore;
+    private readonly  TempDataStore<EmployeeRegisterForm> _empDataStore;
 
     /// <summary>
     /// コンストラクタ
     /// </summary>
     /// <param name="logger"></param>
     /// <param name="employeeRegisterService"></param>
-    /// <param name="employeeViewModelAdapter"></param>
+    /// <param name="employeeRegisterFormAdapter"></param>
     /// <param name="empDataStore"></param>
     public EmployeeRegisterController(
         ILogger<EmployeeRegisterController> logger,
         IEmployeeRegisterService employeeRegisterService,
-        IFromViewModel<Employee, EmployeeRegisterForm> employeeViewModelAdapter,
-        ITempDataStore<EmployeeRegisterForm> empDataStore)
+        EmployeeRegisterFormAdapter employeeRegisterFormAdapter,
+        TempDataStore<EmployeeRegisterForm> empDataStore)
     {
         _logger = logger;
         _employeeRegisterService = employeeRegisterService;
-        _employeeViewModelAdapter = employeeViewModelAdapter;
+        _employeeRegisterFormAdapter = employeeRegisterFormAdapter;
         _empDataStore = empDataStore;
     }
 
@@ -123,7 +123,7 @@ public class EmployeeRegisterController : Controller
             return RedirectToAction("Enter");
         }
         // EmployeeRegisterFormをドメインモデル:Employeeに変換する
-        var employee = _employeeViewModelAdapter.ToDomain(form!);
+        var employee = _employeeRegisterFormAdapter.Restore(form!);
         // 新しい従業員を登録する
         _employeeRegisterService.Register(employee);
         return View(form);

@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using WebApp_Sample.Applications.Domains;
 using WebApp_Sample.Applications.Services;
 using WebApp_Sample.Applications.Services.Impls;
 using WebApp_Sample.Applications.Repositories;
@@ -7,9 +6,8 @@ using WebApp_Sample.Infrastructures.Adapters;
 using WebApp_Sample.Infrastructures.Context;
 using WebApp_Sample.Infrastructures.Repositories;
 using WebApp_Sample.Models;
-using WebApp_Sample.Models.Adapters.Impls;
 using WebApp_Sample.Models.Stores;
-using WebApp_Sample.Models.Stores.Impls;
+using WebApp_Sample.Models.Adapters;
 
 namespace WebApp_Sample.Configs;
 /// <summary>
@@ -81,10 +79,12 @@ public static class DependencyInjectionConfig
     private static void SettingPresentations(IServiceCollection services)
     {
         // 従業員登録ViewModelをドメインオブジェクト:従業員に変換するアダプターインターフェイスの実装
-        services.AddScoped<IFromViewModel<Employee, EmployeeRegisterForm> ,
-            EmployeeRegisterViewModelAdapter>();
-        // TempDataへのEmployeeRegisterFormの保存・復元するためのインターフェイス実装
-        services.AddScoped<ITempDataStore<EmployeeRegisterForm> ,
-            EmployeeRegisterFormStore>();
+        services.AddScoped<EmployeeRegisterFormAdapter>();
+        // TempDataへのEmployeeRegisterFormの保存・復元するためのクラス
+        // コンストラクタを利用して明示的にDIコンテナにインスタンスを登録する
+        services.AddScoped(
+            provider =>
+            new TempDataStore<EmployeeRegisterForm>("EmployeeRegisterForm")
+        );
     }
 }
