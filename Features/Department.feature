@@ -5,4 +5,3 @@ Feature: 部署オブジェクトの生成
     Given 部署IDが1である
     When 部署名が"総務部"である
     Then Departmentオブジェクトが生成される
-
