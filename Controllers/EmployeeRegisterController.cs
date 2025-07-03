@@ -54,6 +54,7 @@ public class EmployeeRegisterController : Controller
     public IActionResult Enter()
     {
         EmployeeRegisterForm? form = null;
+        // [戻る]ボタンへの対応
         // TempDataからEmployeeRegisterFormを取得する
         form = _empDataStore.Load(this);
         if (form == null)

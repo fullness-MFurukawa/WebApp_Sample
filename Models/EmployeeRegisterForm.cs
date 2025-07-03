@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApp_Sample.Applications.Domains;
-
 namespace WebApp_Sample.Models;
 /// <summary>
 /// 部署登録ViewModelクラス
